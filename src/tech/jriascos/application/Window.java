@@ -27,19 +27,13 @@ public class Window extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Blackjack and Poker");
-        Button btn = new Button();
-        btn.setText("Say 'BLACKJACK'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
- 
-            @Override
-            public void handle(ActionEvent event) {
-                Blackjack.startGame();
-            }
-        });
+        primaryStage.setMaximized(true);
+
+        final Scene defaultScene = new Scene(SceneBuilder.buildMainMenu(), 300, 275);
+        defaultScene.getStylesheets().add(Window.class.getResource("/style/style.css").toExternalForm());
         
-        GridPane root = new GridPane();
-        root.getChildren().add(btn);
-        primaryStage.setScene(new Scene(root, 300, 250));
+        primaryStage.setScene(defaultScene);
+
         primaryStage.show();
     }
 }
