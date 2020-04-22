@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import tech.jriascos.model.Blackjack;
 
 public class Window extends Application {
     public static void main(String[] args) {
@@ -25,14 +26,14 @@ public class Window extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("Blackjack and Poker");
         Button btn = new Button();
-        btn.setText("Say 'Hello World'");
+        btn.setText("Say 'BLACKJACK'");
         btn.setOnAction(new EventHandler<ActionEvent>() {
  
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
+                Blackjack.startGame();
             }
         });
         
