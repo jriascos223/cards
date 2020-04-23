@@ -8,10 +8,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import tech.jriascos.util.Tools;
@@ -87,7 +90,71 @@ public class SceneBuilder {
     }
 
 	public static GridPane buildBJScreen() {
-		return new GridPane();
+        GridPane screenBJ = new GridPane();
+        screenBJ.setId("screenBJ");
+
+        //center, which will contain hit & stand buttons, 
+        VBox cMenu = new VBox();
+        cMenu.setSpacing(100);
+        cMenu.prefHeightProperty().bind(screenBJ.heightProperty());
+        cMenu.setId("cMenu");
+        cMenu.setAlignment(Pos.CENTER);
+        Label playLog = new Label();
+        playLog.setId("playLog");
+        playLog.setText(playLog.getText() + "WOAH");
+        VBox betting = new VBox();
+        betting.setId("betting");
+        playLog.setAlignment(Pos.CENTER);
+        betting.setAlignment(Pos.CENTER);
+
+        Label fundsDisplay = new Label("FUNDS HERE");
+        TextField betInput = new TextField();
+        Button submit = new Button("CONFIRM BET");
+
+        betting.getChildren().addAll(fundsDisplay, betInput, submit);
+
+        Label dealerLabel = new Label("DEALER");
+        dealerLabel.setId("dealerLabel");
+        HBox dealerHand = new HBox();
+        dealerHand.setId("dealerHand");
+
+        HBox playButtons = new HBox();
+        Button hitButton = new Button("HIT");
+        Button standButton = new Button("STAND");
+        hitButton.setId("hitButton");
+        standButton.setId("standButton");
+        playButtons.getChildren().addAll(hitButton, standButton);
+        playButtons.setAlignment(Pos.CENTER);
+        playButtons.setSpacing(10);
+
+
+        Label playerLabel = new Label("PLAYER");
+        playerLabel.setId("playerLabel");
+        HBox playerHand = new HBox();
+        playerHand.setId("playerHand");
+
+        cMenu.getChildren().addAll(dealerLabel, dealerHand, playButtons, playerLabel, playerHand);
+
+        screenBJ.add(playLog, 0, 0);
+        screenBJ.add(cMenu, 1, 0);
+        screenBJ.add(betting, 2, 0);
+
+        ColumnConstraints clm1 = new ColumnConstraints();
+        ColumnConstraints clm2 = new ColumnConstraints();
+        ColumnConstraints clm3 = new ColumnConstraints();
+
+        RowConstraints row1 = new RowConstraints();
+
+        row1.setPercentHeight(100);
+
+        clm1.setPercentWidth(33);
+        clm2.setPercentWidth(33);
+        clm3.setPercentWidth(33);
+
+        screenBJ.getColumnConstraints().addAll(clm1, clm2, clm3);
+        screenBJ.getRowConstraints().addAll(row1);
+
+		return screenBJ;
 	}
 
 	public static GridPane buildPKScreen() {
