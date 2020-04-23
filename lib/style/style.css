@@ -1,4 +1,6 @@
-
+@font-face {
+    src: url(../fonts/Exo.ttf);
+}
 
 #pokerMMText, #blackjackMMText {
     -fx-font-size: 30px Tahoma;
@@ -10,13 +12,35 @@
 
 #screenBJ {
     -fx-background-image: url("../images/background.png");
+    -fx-padding: 7 7 7 7;
 }
 
 #dealerHand, #playerHand {
     -fx-border-color: black;
-    -fx-border: 5 5 5 5;
+    -fx-border-width: 5;
+    -fx-padding: 4 4 4 4;
+}
+
+#dealerLabel, #playerLabel {
+    -fx-font-size: 50px;
+    -fx-font-family: "Exo 2";
+    -fx-text-fill: white;
+}
+
+#playLog {
+    -fx-text-fill: white;
+    -fx-font-family: "Exo 2";
+    -fx-font-size: 12px;
+}
+
+#fundsDisplay {
+    -fx-font-family: "Exo 2";
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
 }
 
 #hitButton, #standButton {
     -fx-background-radius: 5em;
 }
+
+

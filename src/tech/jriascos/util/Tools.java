@@ -1,5 +1,7 @@
 package tech.jriascos.util;
 
+import java.io.FileNotFoundException;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -14,7 +16,14 @@ public class Tools {
 
         EventHandler<ActionEvent> showBJScreen = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                stage.getScene().setRoot(SceneBuilder.buildBJScreen());
+                try {
+                    Blackjack game = new Blackjack();
+                    stage.getScene().setRoot(SceneBuilder.buildBJScreen());
+                    listenersBJ(scene, game);
+                } catch (FileNotFoundException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
             }
         };
 
@@ -27,6 +36,17 @@ public class Tools {
         };
 
         startPK.setOnAction(showPKScreen);
+    }
+
+    protected static void listenersBJ(Scene scene, Blackjack game) {
+        Button hitButton = (Button) scene.lookup("#betButton");
+        Button standButton = (Button) scene.lookup("#standButton");
+
+        EventHandler<ActionEvent> hit = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                
+            }
+        };
     }
 
     public static String getClasspathDir() {

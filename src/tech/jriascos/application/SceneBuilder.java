@@ -89,25 +89,26 @@ public class SceneBuilder {
         return container;
     }
 
-	public static GridPane buildBJScreen() {
+	public static GridPane buildBJScreen() throws FileNotFoundException {
         GridPane screenBJ = new GridPane();
         screenBJ.setId("screenBJ");
 
         //center, which will contain hit & stand buttons, 
         VBox cMenu = new VBox();
-        cMenu.setSpacing(100);
+        cMenu.setSpacing(60);
         cMenu.prefHeightProperty().bind(screenBJ.heightProperty());
         cMenu.setId("cMenu");
         cMenu.setAlignment(Pos.CENTER);
         Label playLog = new Label();
         playLog.setId("playLog");
-        playLog.setText(playLog.getText() + "WOAH");
         VBox betting = new VBox();
+        betting.setSpacing(10);
         betting.setId("betting");
         playLog.setAlignment(Pos.CENTER);
         betting.setAlignment(Pos.CENTER);
 
         Label fundsDisplay = new Label("FUNDS HERE");
+        fundsDisplay.setId("fundsDisplay");
         TextField betInput = new TextField();
         Button submit = new Button("CONFIRM BET");
 
@@ -117,21 +118,28 @@ public class SceneBuilder {
         dealerLabel.setId("dealerLabel");
         HBox dealerHand = new HBox();
         dealerHand.setId("dealerHand");
+        dealerHand.setPrefHeight(250);
+        dealerHand.setPrefWidth(175);
 
         HBox playButtons = new HBox();
         Button hitButton = new Button("HIT");
         Button standButton = new Button("STAND");
         hitButton.setId("hitButton");
         standButton.setId("standButton");
+        hitButton.setPrefHeight(90);
+        standButton.setPrefHeight(90);
+        hitButton.setPrefWidth(90);
+        standButton.setPrefWidth(90);
         playButtons.getChildren().addAll(hitButton, standButton);
         playButtons.setAlignment(Pos.CENTER);
         playButtons.setSpacing(10);
-
 
         Label playerLabel = new Label("PLAYER");
         playerLabel.setId("playerLabel");
         HBox playerHand = new HBox();
         playerHand.setId("playerHand");
+        playerHand.setPrefHeight(250);
+        playerHand.setPrefWidth(175);
 
         cMenu.getChildren().addAll(dealerLabel, dealerHand, playButtons, playerLabel, playerHand);
 
@@ -147,9 +155,9 @@ public class SceneBuilder {
 
         row1.setPercentHeight(100);
 
-        clm1.setPercentWidth(33);
-        clm2.setPercentWidth(33);
-        clm3.setPercentWidth(33);
+        clm1.setPercentWidth(10);
+        clm2.setPercentWidth(80);
+        clm3.setPercentWidth(10);
 
         screenBJ.getColumnConstraints().addAll(clm1, clm2, clm3);
         screenBJ.getRowConstraints().addAll(row1);

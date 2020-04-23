@@ -9,6 +9,7 @@ import tech.jriascos.model.Suit;
 import tech.jriascos.model.Value;
 
 public class Blackjack {
+    
     public static void startGame() {
         Deck playDeck = new Deck();
         playDeck.createFullDeck();
