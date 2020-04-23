@@ -18,6 +18,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import tech.jriascos.model.Blackjack;
+import tech.jriascos.util.Tools;
 
 public class Window extends Application {
     public static void main(String[] args) {
@@ -25,7 +26,7 @@ public class Window extends Application {
     }
     
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws FileNotFoundException {
         primaryStage.setTitle("Blackjack and Poker");
         primaryStage.setMaximized(true);
 
@@ -35,5 +36,7 @@ public class Window extends Application {
         primaryStage.setScene(defaultScene);
 
         primaryStage.show();
+
+        Tools.mainMenuListeners(defaultScene, primaryStage);
     }
 }

@@ -1,7 +1,10 @@
-#blackjackSide {
-    -fx-background-color: orange;
+
+
+#pokerMMText, #blackjackMMText {
+    -fx-font-size: 30px Tahoma;
 }
 
-#pokerSide {
-    -fx-background-color: cyan;
+#mainMenu {
+    -fx-background-image: url("../images/background.png");
+    -fx-background-repeat: fill;   
 }
