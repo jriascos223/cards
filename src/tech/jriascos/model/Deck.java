@@ -56,15 +56,28 @@ public class Deck extends ArrayList<Card> {
 	}
 
     public void shuffle(){
+        System.out.println(this);
+        //Create a new arraylist to hold the shuffled cards temporarily
         ArrayList<Card> tmpDeck = new ArrayList<Card>();
+        //Randomly pick from the old deck and copy values to the new deck
         Random random = new Random();
         int randomCardIndex = 0;
         int originalSize = this.size();
-        for(int i = 0; i < originalSize; i++) {
+        for(int i = 0; i<originalSize;i++){
+            //gen random num according to int randomNum = rand.nextInt((max - min) + 1) + min;
             randomCardIndex = random.nextInt((this.size()-1 - 0) + 1) + 0;
+            //throw random card into new deck
             tmpDeck.add(this.get(randomCardIndex));
+            //remove picked from old deck
+            this.remove(randomCardIndex);
         }
-        Collections.copy(this, tmpDeck);
+        this.clear();
+
+        for (Card c : tmpDeck) {
+            this.add(c);
+        }
+        System.out.println(this);
+
     }
 
     public String toString(){

@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import tech.jriascos.application.SceneBuilder;
 import tech.jriascos.model.Blackjack;
@@ -20,8 +21,9 @@ public class Tools {
                 Blackjack game = new Blackjack();
                 try {
                     stage.getScene().setRoot(SceneBuilder.buildBJScreen());
+                    Label fundsDisplay = (Label) scene.lookup("#fundsDisplay");
+                    fundsDisplay.setText(String.valueOf(game.getPlayerFunds()));
                 } catch (FileNotFoundException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
                 listenersBJ(scene, game);
@@ -46,13 +48,21 @@ public class Tools {
 
         EventHandler<ActionEvent> hit = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                game.bet(scene, false);
+                try {
+                    game.bet(scene, false, game.getPlayerHand(), game.getDealerHand());
+                } catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                }
             }
         };
 
         EventHandler<ActionEvent> stand = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                game.stand(scene, false);
+                try {
+                    game.stand(scene, false);
+                } catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                }
             }
         };
 
@@ -60,8 +70,8 @@ public class Tools {
             public void handle(ActionEvent e) {
                 try {
                     game.startGame(scene);
+
                 } catch (FileNotFoundException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
             }

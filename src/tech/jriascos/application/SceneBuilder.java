@@ -79,7 +79,6 @@ public class SceneBuilder {
         startBJ.prefWidthProperty().bind(container.widthProperty().divide(2));
         startBJ.setText("Play Blackjack!");
         startBJ.setId("startBJ");
-        System.out.println(Tools.getClasspathDir());
         FileInputStream inputStream = new FileInputStream(Tools.getClasspathDir() + "images/blackjack.png");
         Image titleBJ = new Image(inputStream);
         ImageView imageView = new ImageView(titleBJ);
@@ -107,7 +106,7 @@ public class SceneBuilder {
         playLog.setAlignment(Pos.CENTER);
         betting.setAlignment(Pos.CENTER);
 
-        Label fundsDisplay = new Label("FUNDS HERE");
+        Label fundsDisplay = new Label();
         fundsDisplay.setId("fundsDisplay");
         TextField betInput = new TextField();
         betInput.setId("money");
@@ -157,9 +156,9 @@ public class SceneBuilder {
 
         row1.setPercentHeight(100);
 
-        clm1.setPercentWidth(10);
-        clm2.setPercentWidth(80);
-        clm3.setPercentWidth(10);
+        clm1.setPercentWidth(20);
+        clm2.setPercentWidth(60);
+        clm3.setPercentWidth(20);
 
         screenBJ.getColumnConstraints().addAll(clm1, clm2, clm3);
         screenBJ.getRowConstraints().addAll(row1);
