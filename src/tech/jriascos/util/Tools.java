@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import tech.jriascos.application.SceneBuilder;
+import tech.jriascos.model.Blackjack;
 
 public class Tools {
     public static void mainMenuListeners(Scene scene, Stage stage) {
@@ -16,14 +17,14 @@ public class Tools {
 
         EventHandler<ActionEvent> showBJScreen = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
+                Blackjack game = new Blackjack();
                 try {
-                    Blackjack game = new Blackjack();
                     stage.getScene().setRoot(SceneBuilder.buildBJScreen());
-                    listenersBJ(scene, game);
                 } catch (FileNotFoundException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
+                listenersBJ(scene, game);
             }
         };
 
@@ -39,14 +40,36 @@ public class Tools {
     }
 
     protected static void listenersBJ(Scene scene, Blackjack game) {
-        Button hitButton = (Button) scene.lookup("#betButton");
+        Button hitButton = (Button) scene.lookup("#hitButton");
         Button standButton = (Button) scene.lookup("#standButton");
+        Button confirmBet = (Button) scene.lookup("#confirmBet");
 
         EventHandler<ActionEvent> hit = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                
+                game.bet(scene, false);
             }
         };
+
+        EventHandler<ActionEvent> stand = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                game.stand(scene, false);
+            }
+        };
+
+        EventHandler<ActionEvent> bet = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                try {
+                    game.startGame(scene);
+                } catch (FileNotFoundException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+            }
+        };
+
+        confirmBet.setOnAction(bet);
+        hitButton.setOnAction(hit);
+        standButton.setOnAction(stand);
     }
 
     public static String getClasspathDir() {

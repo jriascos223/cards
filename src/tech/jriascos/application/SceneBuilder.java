@@ -110,7 +110,9 @@ public class SceneBuilder {
         Label fundsDisplay = new Label("FUNDS HERE");
         fundsDisplay.setId("fundsDisplay");
         TextField betInput = new TextField();
+        betInput.setId("money");
         Button submit = new Button("CONFIRM BET");
+        submit.setId("confirmBet");
 
         betting.getChildren().addAll(fundsDisplay, betInput, submit);
 
