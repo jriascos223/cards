@@ -4,12 +4,16 @@ import java.io.FileNotFoundException;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import tech.jriascos.application.SceneBuilder;
 import tech.jriascos.model.Blackjack;
+import tech.jriascos.model.Poker;
 
 public class Tools {
     public static void mainMenuListeners(Scene scene, Stage stage) {
@@ -34,11 +38,56 @@ public class Tools {
 
         EventHandler<ActionEvent> showPKScreen = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                stage.getScene().setRoot(SceneBuilder.buildPKScreen());
+                Poker game = new Poker();
+                try {
+                    stage.getScene().setRoot(SceneBuilder.buildPKScreen());
+                } catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                }
+                listenersPK(scene, game);
             }
         };
 
         startPK.setOnAction(showPKScreen);
+    }
+
+    protected static void listenersPK(Scene scene, Poker game) {
+        HBox playButtons = (HBox) scene.lookup("#playButtons");
+        Button confirmBet = (Button) scene.lookup("#confirmBet");
+
+        EventHandler<ActionEvent> holdCard = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                try {
+                    game.checkTrades(scene);
+                }catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+            }
+        };
+
+        EventHandler<ActionEvent> bet = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                if (game.getFinished()) {
+                    try {
+                        game.startGame(scene);
+                    } catch (FileNotFoundException e1) {
+                        e1.printStackTrace();
+                    }
+                }else {
+                    game.secondBetTurn(scene);
+                    game.setTrades(game.getTrades() - 1);
+                }
+                
+            }
+        };
+
+        confirmBet.setOnAction(bet);
+
+        for (int i = 0; i < 5; i++) {
+            CheckBox b = (CheckBox) playButtons.getChildren().get(i);
+            b.setOnAction(holdCard);
+        }
+
     }
 
     protected static void listenersBJ(Scene scene, Blackjack game) {

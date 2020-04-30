@@ -10,18 +10,18 @@
     -fx-background-image: url("../images/background.png");
 }
 
-#screenBJ {
+#screenBJ, #screenPK {
     -fx-background-image: url("../images/background.png");
     -fx-padding: 7 7 7 7;
 }
 
-#dealerHand, #playerHand {
+#dealerHand, #playerHand, #tableHand {
     -fx-border-color: black;
     -fx-border-width: 5;
     -fx-padding: 4 4 4 4;
 }
 
-#dealerLabel, #playerLabel {
+#dealerLabel, #playerLabel, #tableLabel {
     -fx-font-size: 50px;
     -fx-font-family: "Exo 2";
     -fx-text-fill: white;
@@ -39,6 +39,7 @@
     -fx-text-fill: white;
 }
 
-#hitButton, #standButton {
+#hitButton, #standButton, #swap1, #swap2, #swap3, #swap4, #swap5 {
     -fx-background-radius: 5em;
+    -fx-text-fill: white;
 }

@@ -56,7 +56,6 @@ public class Deck extends ArrayList<Card> {
 	}
 
     public void shuffle(){
-        System.out.println(this);
         //Create a new arraylist to hold the shuffled cards temporarily
         ArrayList<Card> tmpDeck = new ArrayList<Card>();
         //Randomly pick from the old deck and copy values to the new deck
@@ -76,7 +75,6 @@ public class Deck extends ArrayList<Card> {
         for (Card c : tmpDeck) {
             this.add(c);
         }
-        System.out.println(this);
 
     }
 

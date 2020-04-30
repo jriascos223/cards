@@ -78,16 +78,10 @@ public class Blackjack {
                 playLog.setText(playLog.getText() + "\nYou can't bet more than your current balance.");
                 return;
             }
-            System.out.println("BEFORE DRAWING");
-            System.out.println(this.playdeck);
             this.playerHand.draw(this.playdeck);
             this.playerHand.draw(this.playdeck);
-            System.out.println("PLAYER DREW");
-            System.out.println(this.playdeck);
             this.dealerHand.draw(this.playdeck);
             this.dealerHand.draw(this.playdeck);
-            System.out.println("DEALER DREW");
-            System.out.println(this.playdeck);
             drawHands(this.playerHand, this.dealerHand, scene, true);
 
             if (this.playerHand.getValue() == 21 && playerHand.size() == 2) {
@@ -238,7 +232,6 @@ public class Blackjack {
             cardBackView.setFitHeight(250);
             cardBackView.setFitWidth(175);
             dealerHandBox.getChildren().addAll(cardBackView);
-                
         }else {
             for (Card c : this.dealerHand) {
                 FileInputStream inputStream = new FileInputStream(Tools.getClasspathDir() + "images/cards/" + c.getImgString());
