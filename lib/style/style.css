@@ -43,3 +43,7 @@
     -fx-background-radius: 5em;
     -fx-text-fill: white;
 }
+
+#betting {
+    -fx-padding: 4 4 4 4;
+}

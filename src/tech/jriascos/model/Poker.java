@@ -100,42 +100,40 @@ public class Poker {
             }
         }
         if (trades > this.trades) {
+            playLog.setText("");
             playLog.setText(playLog.getText() + "\nYou have too many trades! There can only be 3, 4 if you have an ace.");
+            for (int i = 0; i < 5; i++) {
+                CheckBox c = (CheckBox) playButtons.getChildren().get(i);
+                c.setSelected(false);
+            }
         }
-
-        for (int i = 0; i < 5; i++) {
-            CheckBox c = (CheckBox) playButtons.getChildren().get(i);
-            c.setSelected(false);
-        }
-        
         
     }
 
+    public void confirmTrades(Scene scene) {
+        HBox playButtons = (HBox) scene.lookup("#playButtons");
+        Array
+        for (int i = 0; i < 5; i++) {
+            CheckBox c = (CheckBox) playButtons.getChildren().get(i);
+            
+        }
+    }
+
     private void clearHands(Scene scene) {
-        HBox tableBox = (HBox) scene.lookup("#tableHand");
         HBox playerHandBox = (HBox) scene.lookup("#playerHand");
 
         playerHandBox.getChildren().clear();
-        tableBox.getChildren().clear();
     }
 
     private void drawHands(Scene scene) throws FileNotFoundException {
         clearHands(scene);
         HBox playerHandBox = (HBox) scene.lookup("#playerHand");
-        HBox tableBox = (HBox) scene.lookup("#tableHand");
 
         for (Card c : this.playerHand) {
             ImageView cardView = new ImageView(new Image(new FileInputStream(Tools.getClasspathDir() + "images/cards/" + c.getImgString())));
             cardView.setFitHeight(250);
             cardView.setFitWidth(175);
             playerHandBox.getChildren().add(cardView);
-        }
-
-        for (Card c : this.tableCards) {
-            ImageView cardView = new ImageView(new Image(new FileInputStream(Tools.getClasspathDir() + "images/cards/" + c.getImgString())));
-            cardView.setFitHeight(250);
-            cardView.setFitWidth(175);
-            tableBox.getChildren().add(cardView);
         }
     }
 

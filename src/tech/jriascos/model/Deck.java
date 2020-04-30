@@ -53,7 +53,12 @@ public class Deck extends ArrayList<Card> {
     public void draw(Deck sourceDeck){
 		this.add(sourceDeck.get(0));
 		sourceDeck.remove(0);
-	}
+    }
+    
+    public void sendTo(Deck destinationDeck, int index) {
+        destinationDeck.addCard(this.get(index));
+        this.remove(index);
+    }
 
     public void shuffle(){
         //Create a new arraylist to hold the shuffled cards temporarily

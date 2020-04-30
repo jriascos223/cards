@@ -54,6 +54,7 @@ public class Tools {
     protected static void listenersPK(Scene scene, Poker game) {
         HBox playButtons = (HBox) scene.lookup("#playButtons");
         Button confirmBet = (Button) scene.lookup("#confirmBet");
+        Button confirmTrades = (Button) scene.lookup("#confirmTrades");
 
         EventHandler<ActionEvent> holdCard = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
@@ -75,11 +76,18 @@ public class Tools {
                     }
                 }else {
                     game.secondBetTurn(scene);
-                    game.setTrades(game.getTrades() - 1);
                 }
                 
             }
         };
+
+        EventHandler<ActionEvent> cTrades = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                game.confirmTrades(scene);
+            }
+        };
+
+        confirmTrades.setOnAction(cTrades);
 
         confirmBet.setOnAction(bet);
 

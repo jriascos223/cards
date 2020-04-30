@@ -191,15 +191,10 @@ public class SceneBuilder {
         betInput.setId("money");
         Button submit = new Button("CONFIRM BET");
         submit.setId("confirmBet");
+        Button confirmTrades = new Button("CONFIRM TRADES");
+        confirmTrades.setId("confirmTrades");
 
-        betting.getChildren().addAll(fundsDisplay, betInput, submit);
-
-        Label tableLabel = new Label("TABLE");
-        tableLabel.setId("tableLabel");
-        HBox tableCards = new HBox();
-        tableCards.setId("tableHand");
-        tableCards.setPrefHeight(250);
-        tableCards.setPrefWidth(175);
+        betting.getChildren().addAll(fundsDisplay, betInput, submit, confirmTrades);
 
         HBox playButtons = new HBox();
         CheckBox swap1 = new CheckBox("SWAP FIRST");
@@ -236,7 +231,7 @@ public class SceneBuilder {
         playerHand.setPrefHeight(250);
         playerHand.setPrefWidth(175);
 
-        cMenu.getChildren().addAll(tableLabel, tableCards,playerLabel, playerHand, playButtons);
+        cMenu.getChildren().addAll(playerLabel, playerHand, playButtons);
 
         screenPK.add(playLog, 0, 0);
         screenPK.add(cMenu, 1, 0);
