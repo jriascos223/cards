@@ -112,10 +112,16 @@ public class Poker {
 
     public void confirmTrades(Scene scene) {
         HBox playButtons = (HBox) scene.lookup("#playButtons");
-        Array
+        boolean swap1 = false;
+        boolean swap2 = false;
+        boolean swap3 = false;
+        boolean swap4 = false;
+        boolean swap5 = false;
         for (int i = 0; i < 5; i++) {
             CheckBox c = (CheckBox) playButtons.getChildren().get(i);
-            
+            if (c.isSelected() == true) {
+                
+            }
         }
     }
 
