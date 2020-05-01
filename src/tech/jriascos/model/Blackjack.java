@@ -67,7 +67,7 @@ public class Blackjack {
         }
         clearHands(scene);
         Label fundsDisplay = (Label) scene.lookup("#fundsDisplay");
-        TextField betTF = (TextField) scene.lookup("#money");
+        Label betTF = (Label) scene.lookup("#money");
         Label playLog = (Label) scene.lookup("#playLog");
         playLog.setText("");
 
@@ -111,7 +111,7 @@ public class Blackjack {
             return;
         }
         Label playLog = (Label) scene.lookup("#playLog");
-        TextField betTF = (TextField) scene.lookup("#money");
+        Label betTF = (Label) scene.lookup("#money");
         Label fundsDisplay = (Label) scene.lookup("#fundsDisplay");
         double playerBet = Integer.parseInt(betTF.getText());
 
@@ -127,7 +127,6 @@ public class Blackjack {
             this.playerHand.emptyDeck(this.playdeck);
             this.dealerHand.emptyDeck(this.playdeck);
             fundsDisplay.setText(String.valueOf(this.playerFunds));
-            System.out.println(this.playerFunds);
         }
     }
 
@@ -145,7 +144,7 @@ public class Blackjack {
         }
         Label fundsDisplay = (Label) scene.lookup("#fundsDisplay");
         Label playLog = (Label) scene.lookup("#playLog");
-        TextField betTF = (TextField) scene.lookup("#money");
+        Label betTF = (Label) scene.lookup("#money");
         double playerBet = Integer.parseInt(betTF.getText());
         if ((this.dealerHand.getValue() > this.playerHand.getValue()) && endRound == false) {
             playLog.setText(playLog.getText() + "\nDealer beats you " + this.dealerHand.getValue() + " to " + this.playerHand.getValue());

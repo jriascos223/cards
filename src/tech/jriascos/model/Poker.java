@@ -46,6 +46,10 @@ public class Poker {
         return this.finished;
     }
 
+    public double getPlayerFunds() {
+        return this.playerFunds;
+    }
+
     public int getTrades() {
         return this.trades;
     }
@@ -62,7 +66,7 @@ public class Poker {
         this.playerBet = 0;
         clearHands(scene);
         Label fundsDisplay = (Label) scene.lookup("#fundsDisplay");
-        TextField betTF = (TextField) scene.lookup("#money");
+        Label betTF = (Label) scene.lookup("#money");
         HBox playButtons = (HBox) scene.lookup("#playButtons");
         Label playLog = (Label) scene.lookup("#playLog");
         Button confirmTrades = (Button) scene.lookup("#confirmTrades");
@@ -168,7 +172,7 @@ public class Poker {
 
     public void secondBetTurn(Scene scene) {
         Label playLog = (Label) scene.lookup("#playLog");
-        TextField betTF = (TextField) scene.lookup("#money");
+        Label betTF = (Label) scene.lookup("#money");
         Label fundsDisplay = (Label) scene.lookup("#fundsDisplay");
         Button confirmTrades = (Button) scene.lookup("#confirmTrades");
         playLog.setText("Now you check the boxes under the cards you want to trade.\nIt is 3 trades if you don't have an ace,\n4 if you do.");

@@ -44,6 +44,8 @@ public class Tools {
                 Poker game = new Poker();
                 try {
                     stage.getScene().setRoot(SceneBuilder.buildPKScreen());
+                    Label fundsDisplay = (Label) scene.lookup("#fundsDisplay");
+                    fundsDisplay.setText(String.valueOf(game.getPlayerFunds()));
                 } catch (FileNotFoundException e1) {
                     e1.printStackTrace();
                 }
@@ -59,6 +61,10 @@ public class Tools {
         Button confirmBet = (Button) scene.lookup("#confirmBet");
         Button confirmTrades = (Button) scene.lookup("#confirmTrades");
         Button backButton = (Button) scene.lookup("#backButton");
+        Label fundsDisplay = (Label) scene.lookup("#fundsDisplay");
+        Label betInput = (Label) scene.lookup("#money");
+        Button plus = (Button) scene.lookup("#plus");
+        Button minus = (Button) scene.lookup("#minus");
 
         EventHandler<ActionEvent> back = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
@@ -73,6 +79,32 @@ public class Tools {
         };
 
         backButton.setOnAction(back);
+
+        EventHandler<ActionEvent> add = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                if (Integer.parseInt(betInput.getText()) == 20) {
+                    betInput.setText("20");
+                }else {
+                    betInput.setText(Integer.toString(Integer.parseInt(betInput.getText()) + 2));
+                }
+            }
+        };
+
+        plus.setOnAction(add);
+
+        EventHandler<ActionEvent> remove = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                if (Integer.parseInt(betInput.getText()) == 2) {
+                    betInput.setText("2");
+                }else {
+                    betInput.setText(Integer.toString(Integer.parseInt(betInput.getText()) - 2));
+                }
+            }
+        };
+
+        minus.setOnAction(remove);
+
+
 
         EventHandler<ActionEvent> holdCard = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
@@ -122,10 +154,38 @@ public class Tools {
     }
 
     protected static void listenersBJ(Scene scene, Stage stage, Blackjack game) {
+        Label fundsDisplay = (Label) scene.lookup("#fundsDisplay");
+        Label betInput = (Label) scene.lookup("#money");
         Button hitButton = (Button) scene.lookup("#hitButton");
         Button standButton = (Button) scene.lookup("#standButton");
         Button confirmBet = (Button) scene.lookup("#confirmBet");
         Button backButton = (Button) scene.lookup("#backButton");
+        Button plus = (Button) scene.lookup("#plus");
+        Button minus = (Button) scene.lookup("#minus");
+
+        EventHandler<ActionEvent> add = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                if (Integer.parseInt(betInput.getText()) == 20) {
+                    betInput.setText("20");
+                }else {
+                    betInput.setText(Integer.toString(Integer.parseInt(betInput.getText()) + 2));
+                }
+            }
+        };
+
+        plus.setOnAction(add);
+
+        EventHandler<ActionEvent> remove = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                if (Integer.parseInt(betInput.getText()) == 2) {
+                    betInput.setText("2");
+                }else {
+                    betInput.setText(Integer.toString(Integer.parseInt(betInput.getText()) - 2));
+                }
+            }
+        };
+
+        minus.setOnAction(remove);
 
         EventHandler<ActionEvent> back = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {

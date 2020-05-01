@@ -21,6 +21,10 @@
     -fx-padding: 4 4 4 4;
 }
 
+#money {
+    -fx-text-fill: white;
+}
+
 #dealerLabel, #playerLabel, #tableLabel {
     -fx-font-size: 50px;
     -fx-font-family: "Exo 2";

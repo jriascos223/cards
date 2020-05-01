@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -18,6 +19,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import tech.jriascos.util.Tools;
 
 public class SceneBuilder {
@@ -115,12 +117,24 @@ public class SceneBuilder {
 
         Label fundsDisplay = new Label();
         fundsDisplay.setId("fundsDisplay");
-        TextField betInput = new TextField();
+        HBox betInputRow = new HBox();
+        betInputRow.setSpacing(5);
+        Button minus = new Button("-");
+        minus.setId("minus");
+        Button plus = new Button("+");
+        plus.setId("plus");
+        minus.setPrefWidth(50);
+        plus.setPrefWidth(50);
+        betInputRow.setId("betIntputRow");
+        Label betInput = new Label("2");
         betInput.setId("money");
+        betInput.setAlignment(Pos.CENTER);
+        betInput.setPrefWidth(270);
+        betInputRow.getChildren().addAll(minus, betInput, plus);
         Button submit = new Button("CONFIRM BET");
         submit.setId("confirmBet");
 
-        betting.getChildren().addAll(fundsDisplay, betInput, submit);
+        betting.getChildren().addAll(fundsDisplay, betInputRow, submit);
 
         Label dealerLabel = new Label("DEALER");
         dealerLabel.setId("dealerLabel");
@@ -199,14 +213,27 @@ public class SceneBuilder {
 
         Label fundsDisplay = new Label();
         fundsDisplay.setId("fundsDisplay");
-        TextField betInput = new TextField();
+        HBox betInputRow = new HBox();
+        betInputRow.setSpacing(5);
+        Label betInput = new Label("2");
         betInput.setId("money");
+        betInput.setAlignment(Pos.CENTER);
+        betInput.setPrefWidth(270);
+        Button minus = new Button("-");
+        minus.setId("minus");
+        Button plus = new Button("+");
+        plus.setId("plus");
+        minus.setPrefWidth(50);
+        plus.setPrefWidth(50);
+        betInputRow.setId("betIntputRow");
+        betInputRow.getChildren().addAll(minus, betInput, plus);
+
         Button submit = new Button("CONFIRM BET");
         submit.setId("confirmBet");
         Button confirmTrades = new Button("CONFIRM TRADES");
         confirmTrades.setId("confirmTrades");
 
-        betting.getChildren().addAll(fundsDisplay, betInput, submit, confirmTrades);
+        betting.getChildren().addAll(fundsDisplay, betInputRow, submit, confirmTrades);
 
         HBox playButtons = new HBox();
         CheckBox swap1 = new CheckBox("SWAP FIRST");
