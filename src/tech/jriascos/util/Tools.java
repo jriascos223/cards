@@ -33,7 +33,7 @@ public class Tools {
                 } catch (FileNotFoundException e1) {
                     e1.printStackTrace();
                 }
-                listenersBJ(scene, game);
+                listenersBJ(scene, stage, game);
             }
         };
 
@@ -47,17 +47,32 @@ public class Tools {
                 } catch (FileNotFoundException e1) {
                     e1.printStackTrace();
                 }
-                listenersPK(scene, game);
+                listenersPK(scene, stage, game);
             }
         };
 
         startPK.setOnAction(showPKScreen);
     }
 
-    protected static void listenersPK(Scene scene, Poker game) {
+    protected static void listenersPK(Scene scene, Stage stage, Poker game) {
         HBox playButtons = (HBox) scene.lookup("#playButtons");
         Button confirmBet = (Button) scene.lookup("#confirmBet");
         Button confirmTrades = (Button) scene.lookup("#confirmTrades");
+        Button backButton = (Button) scene.lookup("#backButton");
+
+        EventHandler<ActionEvent> back = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                try {
+                    scene.setRoot(SceneBuilder.buildMainMenu());
+                    mainMenuListeners(scene, stage);
+                } catch (FileNotFoundException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+            }
+        };
+
+        backButton.setOnAction(back);
 
         EventHandler<ActionEvent> holdCard = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
@@ -106,10 +121,25 @@ public class Tools {
 
     }
 
-    protected static void listenersBJ(Scene scene, Blackjack game) {
+    protected static void listenersBJ(Scene scene, Stage stage, Blackjack game) {
         Button hitButton = (Button) scene.lookup("#hitButton");
         Button standButton = (Button) scene.lookup("#standButton");
         Button confirmBet = (Button) scene.lookup("#confirmBet");
+        Button backButton = (Button) scene.lookup("#backButton");
+
+        EventHandler<ActionEvent> back = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                try {
+                    scene.setRoot(SceneBuilder.buildMainMenu());
+                    mainMenuListeners(scene, stage);
+                } catch (FileNotFoundException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+            }
+        };
+
+        backButton.setOnAction(back);
 
         EventHandler<ActionEvent> hit = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {

@@ -101,11 +101,17 @@ public class SceneBuilder {
         cMenu.setAlignment(Pos.CENTER);
         Label playLog = new Label();
         playLog.setId("playLog");
+        Button back = new Button("BACK");
+        back.setId("backButton");
         VBox betting = new VBox();
         betting.setSpacing(10);
         betting.setId("betting");
         playLog.setAlignment(Pos.CENTER);
         betting.setAlignment(Pos.CENTER);
+        back.setAlignment(Pos.TOP_LEFT);
+        VBox leftSide = new VBox();
+        leftSide.getChildren().addAll(back, playLog);
+        leftSide.prefHeightProperty().bind(screenBJ.prefHeightProperty());
 
         Label fundsDisplay = new Label();
         fundsDisplay.setId("fundsDisplay");
@@ -145,7 +151,7 @@ public class SceneBuilder {
 
         cMenu.getChildren().addAll(dealerLabel, dealerHand, playButtons, playerLabel, playerHand);
 
-        screenBJ.add(playLog, 0, 0);
+        screenBJ.add(leftSide, 0, 0);
         screenBJ.add(cMenu, 1, 0);
         screenBJ.add(betting, 2, 0);
 
@@ -179,11 +185,17 @@ public class SceneBuilder {
         cMenu.setAlignment(Pos.CENTER);
         Label playLog = new Label();
         playLog.setId("playLog");
+        Button back = new Button("BACK");
+        back.setId("backButton");
         VBox betting = new VBox();
         betting.setSpacing(10);
         betting.setId("betting");
-        playLog.setAlignment(Pos.CENTER);
+        playLog.setAlignment(Pos.CENTER_RIGHT);
         betting.setAlignment(Pos.CENTER);
+        back.setAlignment(Pos.TOP_LEFT);
+        VBox leftSide = new VBox();
+        leftSide.getChildren().addAll(back, playLog);
+        leftSide.prefHeightProperty().bind(screenPK.prefHeightProperty());
 
         Label fundsDisplay = new Label();
         fundsDisplay.setId("fundsDisplay");
@@ -233,7 +245,7 @@ public class SceneBuilder {
 
         cMenu.getChildren().addAll(playerLabel, playerHand, playButtons);
 
-        screenPK.add(playLog, 0, 0);
+        screenPK.add(leftSide, 0, 0);
         screenPK.add(cMenu, 1, 0);
         screenPK.add(betting, 2, 0);
 
