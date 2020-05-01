@@ -284,10 +284,11 @@ public class Poker {
         }
         //check for a straight
         for(int i = 1; i < 5; i++) {
+            if(tempArray.get(i).getValue() == Value.ACE && tempArray.get(i-1).getValue() == Value.FIVE) {
+                continue;
+            }
             if (tempArray.get(i).getValue().ordinal() < tempArray.get(i-1).getValue().ordinal()) {
-                if (tempArray.get(i).getValue() != Value.ACE) {
-                    straight = false;
-                }
+                straight = false;
             }else if (tempArray.get(i-1).getValue().ordinal() + 1 != tempArray.get(i).getValue().ordinal()) {
                 straight = false;
             }

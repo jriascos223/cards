@@ -46,11 +46,11 @@ public class Deck extends ArrayList<Card> {
         }
 
         //this is in case I want to test hands.
-        /* this.add(new Card(Suit.CLUB, Value.TEN));
-        this.add(new Card(Suit.DIAMOND, Value.TEN));
-        this.add(new Card(Suit.HEART, Value.TEN));
-        this.add(new Card(Suit.DIAMOND, Value.KING));
-        this.add(new Card(Suit.SPADE, Value.KING)); */
+        /* this.add(new Card(Suit.CLUB, Value.ACE));
+        this.add(new Card(Suit.CLUB, Value.TWO));
+        this.add(new Card(Suit.CLUB, Value.THREE));
+        this.add(new Card(Suit.CLUB, Value.FOUR));
+        this.add(new Card(Suit.SPADE, Value.FIVE)); */
     }
 
     public void addCard(Card addCard) {

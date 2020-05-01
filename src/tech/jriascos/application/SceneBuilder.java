@@ -106,11 +106,11 @@ public class SceneBuilder {
         VBox betting = new VBox();
         betting.setSpacing(10);
         betting.setId("betting");
-        playLog.setAlignment(Pos.CENTER);
         betting.setAlignment(Pos.CENTER);
         back.setAlignment(Pos.TOP_LEFT);
         VBox leftSide = new VBox();
         leftSide.getChildren().addAll(back, playLog);
+        playLog.setAlignment(Pos.CENTER);
         leftSide.prefHeightProperty().bind(screenBJ.prefHeightProperty());
 
         Label fundsDisplay = new Label();
@@ -190,12 +190,12 @@ public class SceneBuilder {
         VBox betting = new VBox();
         betting.setSpacing(10);
         betting.setId("betting");
-        playLog.setAlignment(Pos.CENTER_RIGHT);
         betting.setAlignment(Pos.CENTER);
         back.setAlignment(Pos.TOP_LEFT);
         VBox leftSide = new VBox();
         leftSide.getChildren().addAll(back, playLog);
         leftSide.prefHeightProperty().bind(screenPK.prefHeightProperty());
+        playLog.setAlignment(Pos.CENTER);
 
         Label fundsDisplay = new Label();
         fundsDisplay.setId("fundsDisplay");
