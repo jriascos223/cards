@@ -1,6 +1,8 @@
 package tech.jriascos.util;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import tech.jriascos.application.SceneBuilder;
 import tech.jriascos.model.Blackjack;
+import tech.jriascos.model.Card;
 import tech.jriascos.model.Poker;
 
 public class Tools {
@@ -75,6 +78,7 @@ public class Tools {
                         e1.printStackTrace();
                     }
                 }else {
+                    confirmTrades.setDisable(false);
                     game.secondBetTurn(scene);
                 }
                 
@@ -83,7 +87,11 @@ public class Tools {
 
         EventHandler<ActionEvent> cTrades = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                game.confirmTrades(scene);
+                try {
+                    game.confirmTrades(scene);
+                } catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                }
             }
         };
 
@@ -165,4 +173,6 @@ public class Tools {
             return classpathDirectory;
         }
     }
+
+    
 }

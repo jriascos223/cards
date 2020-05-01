@@ -60,6 +60,11 @@ public class Deck extends ArrayList<Card> {
         this.remove(index);
     }
 
+    public void drawToIndex(Deck sourceDeck, int index) {
+        this.add(index, sourceDeck.get(0));
+        sourceDeck.remove(0);
+    }
+
     public void shuffle(){
         //Create a new arraylist to hold the shuffled cards temporarily
         ArrayList<Card> tmpDeck = new ArrayList<Card>();

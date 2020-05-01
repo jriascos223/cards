@@ -2,6 +2,7 @@ package tech.jriascos.model;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Collections;
 import java.util.regex.Pattern;
 
 import javafx.scene.Scene;
@@ -27,7 +28,7 @@ public class Poker {
     public Poker() {
         Deck newplaydeck = new Deck();
         newplaydeck.createFullDeck();
-        newplaydeck.shuffle();
+        //newplaydeck.shuffle();
         this.playdeck = newplaydeck;
         this.playerHand = new Deck();
         this.tableCards = new Deck();
@@ -59,11 +60,19 @@ public class Poker {
         TextField betTF = (TextField) scene.lookup("#money");
         HBox playButtons = (HBox) scene.lookup("#playButtons");
         Label playLog = (Label) scene.lookup("#playLog");
+        Button confirmTrades = (Button) scene.lookup("#confirmTrades");
         playLog.setText("");
+
+        confirmTrades.setDisable(true);
 
         for (int i = 0; i < 5; i++) {
             CheckBox b = (CheckBox) playButtons.getChildren().get(i);
             b.setDisable(true);
+        }
+
+        for (int i = 0; i < 5; i++) {
+            CheckBox c = (CheckBox) playButtons.getChildren().get(i);
+            c.setSelected(false);
         }
 
         if (this.playerFunds > 0) {
@@ -110,19 +119,23 @@ public class Poker {
         
     }
 
-    public void confirmTrades(Scene scene) {
+    public void confirmTrades(Scene scene) throws FileNotFoundException {
         HBox playButtons = (HBox) scene.lookup("#playButtons");
-        boolean swap1 = false;
-        boolean swap2 = false;
-        boolean swap3 = false;
-        boolean swap4 = false;
-        boolean swap5 = false;
+        Button confirmTrades = (Button) scene.lookup("#confirmTrades");
         for (int i = 0; i < 5; i++) {
             CheckBox c = (CheckBox) playButtons.getChildren().get(i);
             if (c.isSelected() == true) {
-                
+                this.playerHand.sendTo(this.playdeck, i);
+                this.playerHand.drawToIndex(playdeck, i);
             }
         }
+
+        drawHands(scene);
+
+        confirmTrades.setDisable(true);
+
+        checkHand(scene);
+
     }
 
     private void clearHands(Scene scene) {
@@ -176,6 +189,107 @@ public class Poker {
             return false; 
         }
         return pattern.matcher(strNum).matches();
+    }
+
+    public void checkHand(Scene scene) {
+        System.out.println("______________");
+        //now for the worst part of the game
+        boolean royalflush = false;
+        boolean royalflush1 = true;
+        boolean fourofakind = false;
+        boolean fullhouse = false;
+        boolean flush = true;
+        boolean straight = true;
+        boolean threeofakind = false;
+        boolean twopair = false;
+        boolean pair = false;
+        boolean straightflush = false;
+        int repetitions = 1;
+        int pairs = 0;
+        int trios = 0;
+        int aces = 0;
+
+        Deck tempArray = this.playerHand;
+
+        Collections.sort(tempArray);
+
+        for (int i = 1; i < 5; i++) {
+            if (tempArray.get(i).getValue().ordinal() == tempArray.get(i-1).getValue().ordinal()) {
+                repetitions++;
+            }
+            if (repetitions == 2) {
+                pairs++;
+            }
+            if (repetitions == 3) {
+                trios++;
+            }
+            if (tempArray.get(i).getValue() == Value.ACE) {
+                aces++;
+            }
+
+        }
+
+        
+
+        //check for three of a kind
+        if (repetitions == 3) {
+            threeofakind = true;
+        }
+        //check for four of a kind
+        if (repetitions == 4) {
+            fourofakind = true;
+        }
+        //flush check
+        for (int i = 1; i < 5; i++) {
+            if (tempArray.get(i-1).getSuit() != tempArray.get(i).getSuit()) {
+                flush = false;
+            }
+        }
+        //royal flush check 
+        for (int i = 0; i < 5; i++) {
+            if (tempArray.get(i).getValue().ordinal() < Value.TEN.ordinal()) {
+                royalflush1 = false;
+            }
+        }
+        //checking for actual royal flush
+        if (flush && royalflush1) {
+            royalflush = true;
+        }
+        //check for a straight
+        for(int i = 1; i < 5; i++) {
+            if (tempArray.get(i).getValue().ordinal() < tempArray.get(i-1).getValue().ordinal()) {
+                straight = false;
+            }
+        }
+
+        if (pairs == 1) {
+            pair = true;
+        } else if(pairs == 2) {
+            twopair = true;
+        }
+
+        if(pairs == 1 && trios == 1) {
+            fullhouse = true;
+        }
+
+        if(flush = true && straight == true) {
+            straightflush = true;
+        }
+
+        System.out.println("Pairs: " + pairs);
+        System.out.println("Trios: " + trios);
+        System.out.println("Pair: " + pair);
+        System.out.println("Two Pair: " + twopair);
+        System.out.println("Straight: " + straight);
+        System.out.println("Three of a Kind: " + threeofakind);
+        System.out.println("Four of a Kind: " + fourofakind);
+        System.out.println("Flush: " + flush);
+        System.out.println("Full House: " + fullhouse);
+        System.out.println("Straight Flush: " + straightflush);
+        System.out.println("Royal Flush (lol): " + royalflush);
+
+        this.finished = true;
+        this.playerHand.emptyDeck(playdeck);
     }
 
 }
