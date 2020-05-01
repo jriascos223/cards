@@ -24,11 +24,13 @@ public class Poker {
     private boolean secondBetTurn;
     private Pattern pattern = Pattern.compile("\\d+(\\.\\d+)?");
     private int trades;
+    private int playerBet;
+    private int secondPlayerBet;
 
     public Poker() {
         Deck newplaydeck = new Deck();
         newplaydeck.createFullDeck();
-        //newplaydeck.shuffle();
+        newplaydeck.shuffle();
         this.playdeck = newplaydeck;
         this.playerHand = new Deck();
         this.tableCards = new Deck();
@@ -36,6 +38,8 @@ public class Poker {
         this.finished = true;
         this.secondBetTurn = false;
         this.trades = 3;
+        this.playerBet = 0;
+        this.secondPlayerBet = 0;
     }
 
     public boolean getFinished() {
@@ -55,6 +59,7 @@ public class Poker {
             return;
         }
         this.trades = 3;
+        this.playerBet = 0;
         clearHands(scene);
         Label fundsDisplay = (Label) scene.lookup("#fundsDisplay");
         TextField betTF = (TextField) scene.lookup("#money");
@@ -62,6 +67,8 @@ public class Poker {
         Label playLog = (Label) scene.lookup("#playLog");
         Button confirmTrades = (Button) scene.lookup("#confirmTrades");
         playLog.setText("");
+        fundsDisplay.setText("Funds: "+ Double.toString(this.playerFunds) + " | Bet: " + this.playerBet);
+        
 
         confirmTrades.setDisable(true);
 
@@ -76,8 +83,8 @@ public class Poker {
         }
 
         if (this.playerFunds > 0) {
-            double playerBet = Integer.parseInt(betTF.getText());
-            if (playerBet > this.playerFunds) {
+            this.playerBet = Integer.parseInt(betTF.getText());
+            if (this.playerBet > this.playerFunds) {
                 playLog.setText(playLog.getText() + "\nYou can't bet more than your current balance.");
                 return;
             }
@@ -88,11 +95,14 @@ public class Poker {
         this.playerHand.draw(this.playdeck);
         this.playerHand.draw(this.playdeck);
 
+        this.playerFunds -= this.playerBet;
+        fundsDisplay.setText("Funds: "+ Double.toString(this.playerFunds) + " | Bet: " + this.playerBet);
+
         this.secondBetTurn = true;
 
         drawHands(scene);
 
-        playLog.setText(playLog.getText() + "\nBet again? If so, enter another amount.\nIf not, then simply hit confirm bet again.");
+        playLog.setText(playLog.getText() + "\nYou can now bet again, increasing or decreasing the second bet.\nIf so, enter another amount.\nIf not, then simply hit confirm bet again.");
 
         this.finished = false;
 
@@ -159,6 +169,19 @@ public class Poker {
     public void secondBetTurn(Scene scene) {
         Label playLog = (Label) scene.lookup("#playLog");
         TextField betTF = (TextField) scene.lookup("#money");
+        Label fundsDisplay = (Label) scene.lookup("#fundsDisplay");
+        Button confirmTrades = (Button) scene.lookup("#confirmTrades");
+        playLog.setText("Now you check the boxes under the cards you want to trade.\nIt is 3 trades if you don't have an ace,\n4 if you do.");
+        this.secondPlayerBet = Integer.parseInt(betTF.getText());
+
+        if (this.secondPlayerBet > this.playerFunds) {
+            confirmTrades.setDisable(true);
+            playLog.setText(playLog.getText() + "\nYou can't bet more than your current balance.");
+            return;
+        }
+        confirmTrades.setDisable(false);
+        this.playerFunds -= this.secondPlayerBet;
+        fundsDisplay.setText("Funds: "+ Double.toString(this.playerFunds) + " | Bet: " + (this.playerBet + this.secondPlayerBet));
 
         if (isNumeric(betTF.getText())) {
             playOrKeep(scene, Integer.parseInt(betTF.getText()));
@@ -204,7 +227,7 @@ public class Poker {
         boolean twopair = false;
         boolean pair = false;
         boolean straightflush = false;
-        int repetitions = 1;
+        int repetitions = 0;
         int pairs = 0;
         int trios = 0;
         int aces = 0;
@@ -215,22 +238,26 @@ public class Poker {
 
         for (int i = 1; i < 5; i++) {
             if (tempArray.get(i).getValue().ordinal() == tempArray.get(i-1).getValue().ordinal()) {
-                repetitions++;
-            }
-            if (repetitions == 2) {
-                pairs++;
-            }
-            if (repetitions == 3) {
-                trios++;
+                if (repetitions == 0) {
+                    repetitions += 2;
+                }else {
+                    repetitions++;
+                }
+                if (repetitions == 2) {
+                    pairs++;
+                }
+                if (repetitions == 3) {
+                    trios++;
+                    pairs--;
+                }
+            }else {
+                repetitions = 0;
             }
             if (tempArray.get(i).getValue() == Value.ACE) {
                 aces++;
             }
 
         }
-
-        
-
         //check for three of a kind
         if (repetitions == 3) {
             threeofakind = true;
@@ -258,6 +285,10 @@ public class Poker {
         //check for a straight
         for(int i = 1; i < 5; i++) {
             if (tempArray.get(i).getValue().ordinal() < tempArray.get(i-1).getValue().ordinal()) {
+                if (tempArray.get(i).getValue() != Value.ACE) {
+                    straight = false;
+                }
+            }else if (tempArray.get(i-1).getValue().ordinal() + 1 != tempArray.get(i).getValue().ordinal()) {
                 straight = false;
             }
         }
@@ -276,6 +307,7 @@ public class Poker {
             straightflush = true;
         }
 
+        System.out.println(tempArray);
         System.out.println("Pairs: " + pairs);
         System.out.println("Trios: " + trios);
         System.out.println("Pair: " + pair);
@@ -288,8 +320,88 @@ public class Poker {
         System.out.println("Straight Flush: " + straightflush);
         System.out.println("Royal Flush (lol): " + royalflush);
 
+        if(royalflush) {
+            payout("rflush", scene);
+        }else if(straightflush) {
+            payout("sflush", scene);
+        }else if (fourofakind) {
+            payout("4ofakind", scene);
+        }else if (fullhouse) {
+            payout("fullhouse", scene);
+        }else if (flush) {
+            payout("flush", scene);
+        }else if (straight) {
+            payout("straight", scene);
+        }else if (threeofakind) {
+            payout("3ofakind", scene);
+        }else if (twopair) {
+            payout("2pair", scene);
+        }else if (pair) {
+            payout("pair", scene);
+        }else {
+            payout("fail", scene);
+        }
+
         this.finished = true;
         this.playerHand.emptyDeck(playdeck);
+    }
+
+    private void payout(String string, Scene scene) {
+        Label playLog = (Label) scene.lookup("#playLog");
+        int totalBet = this.playerBet + this.secondPlayerBet;
+        Label fundsDisplay = (Label) scene.lookup("#fundsDisplay");
+        switch(string){
+            case "rflush":
+                playLog.setText("You got a royal flush! Damn! Here's your money.");
+                this.playerFunds += totalBet * 250 + totalBet;
+                fundsDisplay.setText("Funds: "+ Double.toString(this.playerFunds) + " | Bet Was: " + totalBet);
+                break;
+            case "sflush":
+                playLog.setText("You got a straight flush! Nice!");
+                this.playerFunds += totalBet * 100 + totalBet;
+                fundsDisplay.setText("Funds: "+ Double.toString(this.playerFunds) + " | Bet Was: " + totalBet);
+                break;
+            case "4ofakind":
+                playLog.setText("You got a 4 of a kind? Awesome!");
+                this.playerFunds+= totalBet * 25 + totalBet;
+                fundsDisplay.setText("Funds: "+ Double.toString(this.playerFunds) + " | Bet Was: " + totalBet);
+                break;
+            case "fullhouse":
+                playLog.setText("Is that a full house? Well done!");
+                this.playerFunds+= totalBet * 10 + totalBet;
+                fundsDisplay.setText("Funds: "+ Double.toString(this.playerFunds) + " | Bet Was: " + totalBet);
+                break;
+            case "flush":
+                playLog.setText("Flush? Nice hand, here's your money.");
+                this.playerFunds+= totalBet * 5 + totalBet;
+                fundsDisplay.setText("Funds: "+ Double.toString(this.playerFunds) + " | Bet Was: " + totalBet);
+                break;
+            case "straight":
+                playLog.setText("Straight? Good hand.");
+                this.playerFunds+= totalBet * 3 + totalBet;
+                fundsDisplay.setText("Funds: "+ Double.toString(this.playerFunds) + " | Bet Was: " + totalBet);
+                break;
+            case "3ofakind":
+                playLog.setText("3 of a kind? Nice.");
+                this.playerFunds+= this.playerBet * 2 + totalBet;
+                fundsDisplay.setText("Funds: "+ Double.toString(this.playerFunds) + " | Bet Was: " + totalBet);
+                break;
+            case "2pair":
+                playLog.setText("2 pair is a good hand. Here's the payout:");
+                this.playerFunds+= totalBet * 1 + totalBet;
+                fundsDisplay.setText("Funds: "+ Double.toString(this.playerFunds) + " | Bet Was: " + totalBet);
+                break;
+            case "pair":
+                playLog.setText("Better than nothing. Here's the bet back.");
+                this.playerFunds+= totalBet;
+                fundsDisplay.setText("Funds: "+ Double.toString(this.playerFunds) + " | Bet Was: " + totalBet);
+                break;
+            default:
+                playLog.setText("Sorry, that's not a strong enough hand. You lose: " + totalBet);
+                fundsDisplay.setText("Funds: "+ Double.toString(this.playerFunds) + " | Bet Was: " + totalBet);
+                break; 
+
+        }   
     }
 
 }
