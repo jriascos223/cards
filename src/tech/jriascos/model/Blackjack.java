@@ -73,6 +73,8 @@ public class Blackjack {
 
         if (this.playerFunds > 0) {
             double playerBet = Integer.parseInt(betTF.getText());
+            this.playerFunds -= playerBet;
+            fundsDisplay.setText(Double.toString(this.playerFunds));
  
             if (playerBet > this.playerFunds) {
                 playLog.setText(playLog.getText() + "\nYou can't bet more than your current balance.");
@@ -122,7 +124,6 @@ public class Blackjack {
         drawHands(playerCards, dealerCards, scene, true);
         if (this.playerHand.getValue() > 21) {
             playLog.setText(playLog.getText() + "\nBust. Busted at: " + playerHand.getValue());
-            this.playerFunds -= playerBet;
             this.finished = true;
             this.playerHand.emptyDeck(this.playdeck);
             this.dealerHand.emptyDeck(this.playdeck);
@@ -148,7 +149,6 @@ public class Blackjack {
         double playerBet = Integer.parseInt(betTF.getText());
         if ((this.dealerHand.getValue() > this.playerHand.getValue()) && endRound == false) {
             playLog.setText(playLog.getText() + "\nDealer beats you " + this.dealerHand.getValue() + " to " + this.playerHand.getValue());
-            this.playerFunds -= playerBet;
             fundsDisplay.setText(String.valueOf(this.playerFunds));
             System.out.println(this.playerFunds);
             endRound = true;
@@ -186,7 +186,6 @@ public class Blackjack {
         } else if (endRound == false) // dealer wins
         {
             playLog.setText(playLog.getText() + "\nDealer wins.");
-            this.playerFunds -= playerBet;
             fundsDisplay.setText(String.valueOf(this.playerFunds));
             System.out.println(this.playerFunds);
         }
