@@ -2,6 +2,8 @@
 
 dir=$(pwd -P)
 cd lib
+echo "Removing old javafx dependency..."
+rm -rf "javafx-sdk-11.0.2"
 if [ $OSTYPE == "msys" ]
 then
     unzip -nq openjfx-11.0.2_windows-x64_bin-sdk
